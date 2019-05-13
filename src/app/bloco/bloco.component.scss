@@ -1,0 +1,16 @@
+.bloco {
+    border: 0.5px solid black;
+    width: 100%;
+    height: 100%;
+}
+
+.line {
+    height: calc(100%/3);
+    display: flex;
+}
+
+app-bloco-number {
+    display: inline-block;
+    width: calc(100%/3);
+    height: 100%;
+}

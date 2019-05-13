@@ -1,0 +1,15 @@
+.tabuleiro {
+    border: 5px solid black;
+    width: 30vw;
+    height: 30vw;
+}
+
+.line {
+    height: calc(100%/3);
+}
+
+app-bloco {
+    display: inline-block;
+    width: calc(100%/3);
+    height: 100%;
+}
