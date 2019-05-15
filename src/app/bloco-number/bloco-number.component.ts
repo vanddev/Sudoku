@@ -8,9 +8,18 @@ import { Component, OnInit, Input } from '@angular/core';
 export class BlocoNumberComponent implements OnInit {
 
   @Input() private valor: number;
+  @Input() private selected: boolean;
 
   constructor() { }
 
   ngOnInit() {}
+
+  selectNumber() {
+    this.selected = true;
+  }
+
+  clean() {
+    this.selected = false;
+  }
 
 }

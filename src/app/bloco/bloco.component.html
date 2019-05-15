@@ -1,5 +1,5 @@
 <div class="bloco">
-    <div class="line" *ngFor="let bloco of blocos">
-        <app-bloco-number *ngFor="let bloco of blocos"></app-bloco-number>
+    <div class="line" *ngFor="let line of lines; let i = index">
+        <app-bloco-number *ngFor="let bloco of blocos[i]" [valor]="bloco" #bn></app-bloco-number>
     </div>              
 </div>

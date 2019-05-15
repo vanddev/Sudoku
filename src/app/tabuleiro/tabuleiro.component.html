@@ -1,5 +1,12 @@
 <div class="tabuleiro">
-    <div class="line" *ngFor="let bloco of blocos">
-      <app-bloco *ngFor="let bloco of blocos"></app-bloco>
+    <div class="line" *ngFor="let bloco of blocos; let i = index">
+      <app-bloco *ngFor="let bloco of blocos; let j = index" #blc
+              [ngClass]="{
+                'b-top' : i === 0,
+                'b-bot' : i === 2,
+                'b-left': j === 0,
+                'b-right': j === 2
+              }"></app-bloco>
     </div>
 </div>
+<!-- <app-bloco></app-bloco> -->

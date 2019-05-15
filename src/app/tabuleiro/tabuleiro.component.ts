@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
+import { BlocoComponent } from '../bloco/bloco.component';
 
 @Component({
   selector: 'app-tabuleiro',
@@ -9,6 +10,7 @@ export class TabuleiroComponent implements OnInit {
 
   private blocos = [];
   @Input() private lines: number;
+  @ViewChildren('blc') components: QueryList<BlocoComponent>;
 
   constructor() { }
 
@@ -17,5 +19,9 @@ export class TabuleiroComponent implements OnInit {
       this.blocos.push(index);
     }
   }
+
+  ngAfterViewInit(){
+    console.log(this.components.toArray());
+}
 
 }
