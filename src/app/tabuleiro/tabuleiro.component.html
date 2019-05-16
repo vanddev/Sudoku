@@ -1,6 +1,8 @@
 <div class="tabuleiro">
-    <div class="line" *ngFor="let bloco of blocos; let i = index">
-      <app-bloco *ngFor="let bloco of blocos; let j = index" #blc
+    <div class="line" *ngFor="let numero of range; let i = index">
+      <app-bloco *ngFor="let valor of linhas[i]; let j = index" #blc
+              (hasSelected)="onSelected($event)"
+              [numero]="valor"
               [ngClass]="{
                 'b-top' : i === 0,
                 'b-bot' : i === 2,

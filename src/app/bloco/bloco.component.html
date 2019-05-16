@@ -1,5 +1,8 @@
 <div class="bloco">
-    <div class="line" *ngFor="let line of lines; let i = index">
-        <app-bloco-number *ngFor="let bloco of blocos[i]" [valor]="bloco" #bn></app-bloco-number>
+    <div class="line" *ngFor="let numero of range; let i = index">
+        <app-bloco-number *ngFor="let valor of linhas[i]; let j = index"
+                        (hasSelected)="onSelected($event)"
+                        [numero]="valor"
+                        [valor]="blocos[i][j]" #bn></app-bloco-number>
     </div>              
 </div>

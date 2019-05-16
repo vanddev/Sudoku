@@ -1,5 +1,7 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren, Input, Output, EventEmitter } from '@angular/core';
 import { BlocoNumberComponent } from '../bloco-number/bloco-number.component';
+import { EstruturaService } from '../estrutura.service';
+import _ from "lodash";
 
 @Component({
   selector: 'app-bloco',
@@ -10,12 +12,21 @@ export class BlocoComponent implements OnInit {
 
   private blocos = [];
   private lines = [0,1,2];
+  private linhas = [];
+  private colunas = [];
+  private range = [];
+  @Input() public numero: number;
   private pickedNumber = [];
   @ViewChildren('bn') components: QueryList<BlocoNumberComponent>;
+  @Output() hasSelected: EventEmitter<any> = new EventEmitter();
 
- constructor() { }
+ constructor(private service: EstruturaService) { }
 
   ngOnInit() {
+    let estrutura = this.service.gerarEstrutura(3, 3);
+    this.linhas = estrutura.horizontal;
+    this.colunas = estrutura.vertical;
+    this.range = _.range(3);
     this.randomizeNumber();
   }
 
@@ -51,7 +62,26 @@ export class BlocoComponent implements OnInit {
 
     this.fixBlocos();
 
-    console.log(this.blocos);
+    // console.log(this.blocos);
+  }
+
+  onSelected(event) {
+    this.components.toArray().filter(c => c.numero !== event).forEach(c => c.markNumber());
+    this.hasSelected.emit({'bloco': this.numero, 'posicao': event});
+  }
+
+  toMark(posicao) {
+    this.components.toArray()[posicao].markNumber();
+  }
+
+  toMarkLine(posicao) {
+    let linha = this.service.extrairEstrutura(this.linhas, posicao);
+    this.components.filter(c=> linha.indexOf(c.numero) > -1).forEach(c=> c.markNumber());
+  }
+
+  toMarkColumn(posicao) {
+    let coluna = this.service.extrairEstrutura(this.colunas, posicao);
+    this.components.filter(c=> coluna.indexOf(c.numero) > -1).forEach(c=> c.markNumber());
   }
 
   fixBlocos() {

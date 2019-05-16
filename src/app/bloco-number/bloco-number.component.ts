@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-bloco-number',
@@ -7,8 +8,11 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class BlocoNumberComponent implements OnInit {
 
+  @Input() public numero: number;
   @Input() private valor: number;
   @Input() private selected: boolean;
+  private marked: boolean;
+  @Output() hasSelected: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
@@ -16,10 +20,16 @@ export class BlocoNumberComponent implements OnInit {
 
   selectNumber() {
     this.selected = true;
+    this.hasSelected.emit(this.numero);
+  }
+
+  public markNumber() {
+    this.marked = true;
   }
 
   clean() {
     this.selected = false;
+    this.marked = false;
   }
 
 }
