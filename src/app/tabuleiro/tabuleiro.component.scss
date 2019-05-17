@@ -1,34 +1,34 @@
+$bloco-extra-border: 2px solid black;
+
 .tabuleiro {
-    // border: 3px solid black;
     width: 30vw;
     height: 30vw;
 }
 
 .line {
     height: calc(100%/3);
-    // height: 133px;
     display: flex;
 }
 
 app-bloco {
     display: inline-block;
     width: calc(100%/3);
-    // width: 133px;
     height: 100%;
+    border: 1px solid black;
 }
 
 .b-top {
-    border-top: 2px solid black;
+    border-top: $bloco-extra-border;
 }
 
 .b-bot {
-    border-bottom: 2px solid black;
+    border-bottom: $bloco-extra-border;
 }
 
 .b-left {
-    border-left: 2px solid black;
+    border-left: $bloco-extra-border;
 }
 
 .b-right {
-    border-right: 2px solid black;
+    border-right: $bloco-extra-border;
 }

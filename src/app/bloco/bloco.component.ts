@@ -11,12 +11,10 @@ import _ from "lodash";
 export class BlocoComponent implements OnInit {
 
   private blocos = [];
-  private lines = [0,1,2];
   private linhas = [];
   private colunas = [];
   private range = [];
   @Input() public numero: number;
-  private pickedNumber = [];
   @ViewChildren('bn') components: QueryList<BlocoNumberComponent>;
   @Output() hasSelected: EventEmitter<any> = new EventEmitter();
 

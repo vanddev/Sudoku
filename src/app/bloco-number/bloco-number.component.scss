@@ -1,12 +1,12 @@
 .number {
-    border: 0.5px solid black;
+    border: 1px solid lightgrey;
     width: 100%;
     height: 100%;
     font-size: 2rem;
     text-align: center;
 
-    &.selected {
-        background-color: gray;
+    &.selected  {
+        background-color: lightslategray;
     }
 
     &.marked {

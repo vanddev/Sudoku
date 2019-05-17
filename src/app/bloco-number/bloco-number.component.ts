@@ -19,12 +19,14 @@ export class BlocoNumberComponent implements OnInit {
   ngOnInit() {}
 
   selectNumber() {
-    this.selected = true;
-    this.hasSelected.emit(this.numero);
+    if(!this.selected) {
+      this.selected = true;
+      this.hasSelected.emit(this.numero);
+    }
   }
 
   public markNumber() {
-    this.marked = true;
+    if(!this.selected) this.marked = true;
   }
 
   clean() {
