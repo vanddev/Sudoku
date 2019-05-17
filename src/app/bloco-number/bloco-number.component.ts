@@ -21,6 +21,7 @@ export class BlocoNumberComponent implements OnInit {
   selectNumber() {
     if(!this.selected) {
       this.selected = true;
+      this.marked = false;
       this.hasSelected.emit(this.numero);
     }
   }

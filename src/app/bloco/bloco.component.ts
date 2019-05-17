@@ -2,6 +2,7 @@ import { Component, OnInit, QueryList, ViewChildren, Input, Output, EventEmitter
 import { BlocoNumberComponent } from '../bloco-number/bloco-number.component';
 import { EstruturaService } from '../estrutura.service';
 import _ from "lodash";
+import { cleanSession } from 'selenium-webdriver/safari';
 
 @Component({
   selector: 'app-bloco',
@@ -28,10 +29,16 @@ export class BlocoComponent implements OnInit {
     this.randomizeNumber();
   }
 
-  clean() {
-    this.components.toArray().forEach(c => {
-      c.clean();
-    })
+  clean(ignore) {
+    if(ignore != null) {
+      this.components.toArray().filter(c=>c.numero!==ignore).forEach(c => {
+        c.clean();
+      })
+    } else {
+      this.components.toArray().forEach(c => {
+        c.clean();
+      })
+    }
   }
 
   randomizeNumber() {
@@ -64,6 +71,7 @@ export class BlocoComponent implements OnInit {
   }
 
   onSelected(event) {
+    this.clean(event);
     this.components.toArray().filter(c => c.numero !== event).forEach(c => c.markNumber());
     this.hasSelected.emit({'bloco': this.numero, 'posicao': event});
   }

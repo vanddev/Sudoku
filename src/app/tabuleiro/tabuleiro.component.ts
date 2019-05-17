@@ -29,18 +29,17 @@ export class TabuleiroComponent implements OnInit {
   }
 
   onSelected(event) {
-    this.clean();
+    this.clean(event.bloco);
     let linha = this.service.extrairEstrutura(this.linhas, event.bloco);
     let coluna = this.service.extrairEstrutura(this.colunas, event.bloco);
-    console.log(event);
     this.components
-        .filter(c => linha.indexOf(c.numero) > -1)
+        .filter(c => linha.indexOf(c.numero) > -1 && c.numero !== event.bloco)
         .forEach(c=> {
           c.toMarkLine(event.posicao);
           this.areaMarcada.linha.push(c);
         });
     this.components
-        .filter(c => coluna.indexOf(c.numero) > -1)
+        .filter(c => coluna.indexOf(c.numero) > -1  && c.numero !== event.bloco)
         .forEach(c=> {
           c.toMarkColumn(event.posicao)
           this.areaMarcada.coluna.push(c);
@@ -48,9 +47,9 @@ export class TabuleiroComponent implements OnInit {
     this.areaSelecionada = event;
   }
 
-  clean() {
-    if (this.areaSelecionada) {
-      this.components.toArray()[this.areaSelecionada.bloco].clean();
+  clean(bloco) {
+    if (this.areaSelecionada && this.areaSelecionada.bloco !== bloco) {
+      this.components.toArray()[this.areaSelecionada.bloco].clean(null);
     }
     this.areaMarcada.linha.forEach(c=> c.clean());
     this.areaMarcada.coluna.forEach(c=> c.clean());

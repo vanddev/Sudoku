@@ -1,8 +1,10 @@
 $bloco-extra-border: 2px solid black;
+$altura-padrao: 30vw;
+$largura-padrao: 30vw;
 
 .tabuleiro {
-    width: 30vw;
-    height: 30vw;
+    width: $largura-padrao;
+    height: $altura-padrao;
 }
 
 .line {
@@ -31,4 +33,21 @@ app-bloco {
 
 .b-right {
     border-right: $bloco-extra-border;
+}
+
+.valores {
+    width: $largura-padrao;
+
+    ul {
+        list-style: none;
+        display: flex;
+        font-size: 2rem;
+        width: 100%;
+        padding: 0;
+        justify-content: space-between;
+
+        li:hover {
+            cursor: pointer;
+        }
+    }
 }
