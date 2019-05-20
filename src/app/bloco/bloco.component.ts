@@ -22,7 +22,7 @@ export class BlocoComponent implements OnInit {
  constructor(private service: EstruturaService) { }
 
   ngOnInit() {
-    let estrutura = this.service.gerarEstrutura(3, 3);
+    let estrutura = this.service.gerarEstrutura(3, 3, false);
     this.linhas = estrutura.horizontal;
     this.colunas = estrutura.vertical;
     this.range = _.range(3);
@@ -66,6 +66,7 @@ export class BlocoComponent implements OnInit {
     }
 
     this.fixBlocos();
+    this.service.validateAndSave(this.blocos);
 
     // console.log(this.blocos);
   }
