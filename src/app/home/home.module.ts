@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
 import { TabuleiroComponent } from '../tabuleiro/tabuleiro.component';
+import { EstruturaService } from '../estrutura.service';
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import { TabuleiroComponent } from '../tabuleiro/tabuleiro.component';
       }
     ])
   ],
-  declarations: [HomePage, TabuleiroComponent, BlocoComponent, BlocoNumberComponent]
+  declarations: [HomePage, TabuleiroComponent, BlocoComponent, BlocoNumberComponent],
+  providers: [EstruturaService]
 })
 export class HomePageModule {}

@@ -1,12 +1,25 @@
 import { Injectable } from '@angular/core';
+import _ from "lodash";
 
 @Injectable({
   providedIn: 'root'
 })
+
+class Estrutura {
+  horizontal = [];
+  vertical = [];
+
+  constructor(horizontal, vertical) {
+    this.horizontal = horizontal;
+    this.vertical = vertical;
+  }
+}
+
 export class EstruturaService {
   
-  horizontalValor = [];
-  verticalValor = [];
+  matriz: Estrutura[] = [].constructor(9);
+  horizontalPos = [];
+  verticalPos = [];
 
   constructor() { }
 
@@ -23,8 +36,9 @@ export class EstruturaService {
         numero++;
       }
       horizontal.push(linha);
-      if (keepValue)
-        this.horizontalValor.push([].constructor(linha.length));
+      if (keepValue){
+        this.horizontalPos.push(linha);
+      }
     }
 
     // preencher vertical
@@ -34,10 +48,11 @@ export class EstruturaService {
         coluna.push(horizontal[j][i]);
       }
       vertical.push(coluna);
-      if (keepValue)
-        this.verticalValor.push([].constructor(coluna.length));
+      if (keepValue){
+        this.verticalPos.push(coluna);
+      }
     }
-    return {'horizontal': horizontal, 'vertical': vertical};
+    return new Estrutura(horizontal, vertical);
   }
 
   private converterEstrutura(bloco) {
@@ -62,11 +77,44 @@ export class EstruturaService {
       vertical.push(coluna);
     }
 
-    return {'horizontal': horizontal, 'vertical': vertical};
+    return new Estrutura(horizontal, vertical);
   }
 
-  validateAndSave(bloco) {
+  validateAndSave(bloco, numero) {
     const estrutura = this.converterEstrutura(bloco);
+    const linha = this.extrairEstrutura(this.horizontalPos, numero);
+    const coluna = this.extrairEstrutura(this.verticalPos, numero);
+    // const matrizFiltered = this.matriz.filter(pos => _.includes(linha, pos.horizontal) && pos !== numero);
+    for (const pos of linha) {
+      for (let i=0; i < estrutura.horizontal.length; i++) {
+          const matrizBloco = this.matriz[pos];
+          if (matrizBloco) {
+                const intersection = _.intersection(
+                                        _.without(estrutura.horizontal[i], ''),
+                                        _.without(matrizBloco.horizontal[i], ''));
+                if (intersection.length > 0) {
+                  console.log(`Achei conflito no bloco ${numero + 1} na linha ${i + 1}`);
+                  return false;
+                }
+          }
+      }
+    }
+    for (const pos of coluna) {
+      for (let i=0; i < estrutura.vertical.length; i++) {
+        const matrizBloco = this.matriz[pos];
+          if (matrizBloco) {
+                const intersection = _.intersection(
+                                        _.without(estrutura.vertical[i], ''),
+                                        _.without(matrizBloco.vertical[i], ''));
+                if (intersection.length > 0) {
+                  console.log(`Achei conflito no bloco ${numero + 1} na coluna ${i + 1}`);
+                  return false;
+                }
+          }
+      }
+    }
+    this.matriz[numero] = estrutura;
+    return true;
   }
 
   public extrairEstrutura(macro, posicao) {

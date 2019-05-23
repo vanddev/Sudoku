@@ -1,8 +1,7 @@
-import { Component, OnInit, QueryList, ViewChildren, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
+import _ from "lodash";
 import { BlocoNumberComponent } from '../bloco-number/bloco-number.component';
 import { EstruturaService } from '../estrutura.service';
-import _ from "lodash";
-import { cleanSession } from 'selenium-webdriver/safari';
 
 @Component({
   selector: 'app-bloco',
@@ -27,6 +26,9 @@ export class BlocoComponent implements OnInit {
     this.colunas = estrutura.vertical;
     this.range = _.range(3);
     this.randomizeNumber();
+    while(!this.service.validateAndSave(this.blocos, this.numero)) {
+      this.randomizeNumber();
+    }
   }
 
   clean(ignore) {
@@ -42,6 +44,7 @@ export class BlocoComponent implements OnInit {
   }
 
   randomizeNumber() {
+    this.blocos = [];
     let positions = [];
     let valores = [];
     let startedNumbers = Math.floor(Math.random() * 3) + 1;
@@ -66,8 +69,6 @@ export class BlocoComponent implements OnInit {
     }
 
     this.fixBlocos();
-    this.service.validateAndSave(this.blocos);
-
     // console.log(this.blocos);
   }
 
